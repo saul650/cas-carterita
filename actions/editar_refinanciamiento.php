@@ -15,12 +15,15 @@
   // $consulta = 'select * from prestamos';
   // $Rconsulta =  'select * from prestamos';
   // $Resultado = mysqli_query($conectar,$consulta);
-  // sql for update
-  $sql = "UPDATE prestamos SET refinanciamiento = '$refinanciamiento' WHERE id = '$_POST[id]'";
+  // sql for instert in table grupo_prestamo id = autoincrement, aprobados = $_post[ 'id' ], fecha = fecha actual
+  $sql = "INSERT INTO grupo_prestamo (aprobados, fecha) VALUES ('$_POST[id]', NOW())";
+  // sql2 for update in table prestamos where id = $_post[ 'id' ] and refinanciamiento = $_post[ 'refinanciamiento' ]
+  $sql2 = "UPDATE prestamos SET refinanciamiento = '$_POST[refinanciamiento]' WHERE id = '$_POST[id]'";
+
   // execute query
-  if ( mysqli_query( $conectar, $sql ) ) {
-    header( 'Location: ../index.php' );
+  if (mysqli_query($conectar, $sql) && mysqli_query($conectar, $sql2)) {
+    echo "New record created successfully";
   } else {
-    echo "Error updating record: " . mysqli_error( $conectar );
+    echo "Error: " . $sql . "<br>" . mysqli_error($conectar);
   }
 ?>
