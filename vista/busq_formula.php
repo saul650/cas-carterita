@@ -49,6 +49,8 @@ use function PHPSTORM_META\type;
         <?php }    ?>
       </tbody>
     </table>
+    <button class="btn btn-primary"> Guardar </button>
   </form>
 </div>
+
 
