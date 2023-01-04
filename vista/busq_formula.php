@@ -40,11 +40,9 @@ use function PHPSTORM_META\type;
           <!-- <td><?php echo $data['refinanciamiento']  ?></td> -->
           <!-- refinanciamiento checkbox -->
           <td>
-            <input
-              type="checkbox"
-              name="refinanciamiento"
-              value="<?php echo $data['refinanciamiento'] ?>"
-            />
+            <!-- if refinanciamiento is 1 then checkbox is checked -->
+            <!-- else checkbox is not checked -->
+            <input type="checkbox" name="refinanciamiento" value="1" <?php if($data['refinanciamiento'] == 1) echo 'checked' ?>>
             <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
           </td>
           </tr>
