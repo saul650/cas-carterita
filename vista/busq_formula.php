@@ -15,7 +15,6 @@ use function PHPSTORM_META\type;
 
 
 <div class="container">
-  <form action="actions/editar_refinanciamiento.php" method="post">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -42,15 +41,16 @@ use function PHPSTORM_META\type;
           <td>
             <!-- if refinanciamiento is 1 then checkbox is checked -->
             <!-- else checkbox is not checked -->
+          <form action="actions/editar_refinanciamiento.php" method="post">
             <input type="checkbox" name="refinanciamiento" value="1" <?php if($data['refinanciamiento'] == 1) echo 'checked' ?>>
             <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
+            <button class="btn btn-primary"> Guardar </button>
+          </form>
           </td>
           </tr>
         <?php }    ?>
       </tbody>
     </table>
-    <button class="btn btn-primary"> Guardar </button>
-  </form>
 </div>
 
 
