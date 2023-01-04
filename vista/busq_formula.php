@@ -15,7 +15,7 @@ use function PHPSTORM_META\type;
 
 
 <div class="container">
-  <form action="../actions/editar_refinanciamiento.php" method="post">
+  <form action="actions/editar_refinanciamiento.php" method="post">
     <table class="table table-striped">
       <thead>
         <tr>
