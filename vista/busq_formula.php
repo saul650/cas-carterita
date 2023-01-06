@@ -22,6 +22,7 @@
       </thead>
       <tbody>
         <?php while($data = mysqli_fetch_array($Resultado))   {     ?>
+          <?php if( $data[ 'refinanciamiento' ] == 0 ) { ?>
           <tr>
           <td><?php echo $data['id_socio']  ?></td>
           <td><?php echo $data['observaciones']  ?></td> 
@@ -29,8 +30,8 @@
           <td><?php echo $data['tipo_transaccion']  ?></td> 
           <td><?php echo $data['monto']  ?></td>
           <td><?php echo $data['fecha']  ?></td>
-          <?php if( $data[ 'refinanciamiento' ] == 0 ) { ?>
             <td>
+
               <form>
                 <input type="checkbox" name="refinanciamiento" value="1" class="refinanciamiento-checkbox">
                 <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
