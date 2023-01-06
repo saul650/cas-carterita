@@ -52,10 +52,12 @@
     const data = [];
 
     refinanciamientoCheckboxes.forEach( checkbox => {
-      data.push({
-        id: checkbox.name,
-        refinanciamiento: checkbox.checked ? 1 : 0
-      });
+      if ( checkbox.checked ) {
+        data.push({
+          id: checkbox.parentElement.querySelector('input[name="id"]').value,
+          refinanciamiento: checkbox.checked ? 1 : 0
+        });
+      }
     } );
 
     fetch( 'actions/editar_refinanciamiento.php', {
@@ -65,5 +67,9 @@
         'Content-Type': 'application/json'
       }
     } );
+    console.log( data );
+    // now show echo of the php file editar_refinanciamiento.php
+
+
   } );
 </script>
