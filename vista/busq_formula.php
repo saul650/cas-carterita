@@ -1,19 +1,12 @@
 <?php
-
  $host = 'localhost';
  $user = 'root';
  $clave = '';
  $bd = 'xd';
  $conectar = mysqli_connect($host,$user,$clave,$bd);
  $consulta = 'select * from prestamos';
- $Rconsulta =  'select * from prestamos';
  $Resultado = mysqli_query($conectar,$consulta);
-use function PHPSTORM_META\type;
-
 ?>
-
-
-
 <div class="container">
     <table class="table table-striped">
       <thead>
@@ -36,21 +29,41 @@ use function PHPSTORM_META\type;
           <td><?php echo $data['tipo_transaccion']  ?></td> 
           <td><?php echo $data['monto']  ?></td>
           <td><?php echo $data['fecha']  ?></td>
-          <!-- <td><?php echo $data['refinanciamiento']  ?></td> -->
-          <!-- refinanciamiento checkbox -->
-          <td>
-            <!-- if refinanciamiento is 1 then checkbox is checked -->
-            <!-- else checkbox is not checked -->
-          <form action="actions/editar_refinanciamiento.php" method="post">
-            <input type="checkbox" name="refinanciamiento" value="1" <?php if($data['refinanciamiento'] == 1) echo 'checked' ?>>
-            <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
-            <button class="btn btn-primary"> Guardar </button>
-          </form>
-          </td>
+          <?php if( $data[ 'refinanciamiento' ] == 0 ) { ?>
+            <td>
+              <form>
+                <input type="checkbox" name="refinanciamiento" value="1" class="refinanciamiento-checkbox">
+                <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
+              </form>
+            </td>
+          <?php } ?>
           </tr>
-        <?php }    ?>
+        <?php } ?>
       </tbody>
     </table>
+    <button id="save-changes" class="btn btn-primary">Guardar cambios</button>
 </div>
 
+<script>
+  const saveChangesButton = document.getElementById('save-changes');
 
+  saveChangesButton.addEventListener( 'click', () => {
+    const refinanciamientoCheckboxes = document.querySelectorAll('.refinanciamiento-checkbox');
+    const data = [];
+
+    refinanciamientoCheckboxes.forEach( checkbox => {
+      data.push({
+        id: checkbox.name,
+        refinanciamiento: checkbox.checked ? 1 : 0
+      });
+    } );
+
+    fetch( 'actions/editar_refinanciamiento.php', {
+      method: 'POST',
+      body: JSON.stringify( data ),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    } );
+  } );
+</script>
