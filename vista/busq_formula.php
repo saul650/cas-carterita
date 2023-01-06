@@ -23,13 +23,13 @@
       <tbody>
         <?php while($data = mysqli_fetch_array($Resultado))   {     ?>
           <?php if( $data[ 'refinanciamiento' ] == 0 ) { ?>
-          <tr>
-          <td><?php echo $data['id_socio']  ?></td>
-          <td><?php echo $data['observaciones']  ?></td> 
-          <td><?php echo $data['plazo']  ?></td>
-          <td><?php echo $data['tipo_transaccion']  ?></td> 
-          <td><?php echo $data['monto']  ?></td>
-          <td><?php echo $data['fecha']  ?></td>
+            <tr>
+            <td><?php echo $data['id_socio']  ?></td>
+            <td><?php echo $data['observaciones']  ?></td> 
+            <td><?php echo $data['plazo']  ?></td>
+            <td><?php echo $data['tipo_transaccion']  ?></td> 
+            <td><?php echo $data['monto']  ?></td>
+            <td><?php echo $data['fecha']  ?></td>
             <td>
 
               <form>
