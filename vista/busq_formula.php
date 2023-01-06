@@ -31,7 +31,6 @@
             <td><?php echo $data['monto']  ?></td>
             <td><?php echo $data['fecha']  ?></td>
             <td>
-
               <form>
                 <input type="checkbox" name="refinanciamiento" value="1" class="refinanciamiento-checkbox">
                 <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
