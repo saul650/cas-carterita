@@ -28,10 +28,7 @@
               <option value="6"> intereses CAI </option>
             </select>
           </div>
-          <div>
-            <label for="refinanciamiento"> Refinanciamiento </label>
-            <input id="refinanciamiento" type="checkbox" name="refinanciamiento" value="1" />
-          </div>
+         
           <div>
             <label for="monto"> Monto </label>
             <input class="input input-bordered input-sm w-full max-w-xs" id="monto" type="text" name="monto" />

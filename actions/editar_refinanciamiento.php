@@ -23,6 +23,7 @@
   // execute query
   if (mysqli_query($conectar, $sql) && mysqli_query($conectar, $sql2)) {
     echo "New record created successfully";
+    header( 'Location: ../index.php');
   } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conectar);
   }

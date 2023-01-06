@@ -24,7 +24,7 @@ use function PHPSTORM_META\type;
           <th scope="col">tipo de transaccion</th>
           <th scope="col">monto</th>
           <th scope="col">fecha</th>
-          <th scope="col">refinanciamiento</th>
+          <th scope="col">verificar</th>
         </tr>
       </thead>
       <tbody>
@@ -51,6 +51,7 @@ use function PHPSTORM_META\type;
         <?php }    ?>
       </tbody>
     </table>
+
 </div>
 
 
