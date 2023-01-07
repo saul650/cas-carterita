@@ -41,24 +41,23 @@
         <?php } ?>
       </tbody>
     </table>
-    <button id="btn-approved" class="btn btn-primary">Aprobar</button>
-    <button id="btn-disapproved" class="btn btn-danger">Desaprobar</button>
+    <button id="btn-approved" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Aprobar</button>
+    <button id="btn-disapproved" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">Desaprobar</button>
 </div>
-<!-- modal with button confirm -->
-<div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modal-confirm-label">Confirmar</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar desicion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>¿Está seguro de realizar esta acción?</p>
+        desea usted que los siguientes usuarios sean aprobados o desaprobados?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="btn-confirm">Confirmar</button>
       </div>
     </div>
@@ -68,8 +67,8 @@
 <script>
   const btnApproved    = document.getElementById( 'btn-approved' );
   const btnDisapproved = document.getElementById( 'btn-disapproved' );
-
-  const data = [];
+  const btnConfirm = document.getElementById( 'btn-confirm' );
+  let data = [];
 
   btnApproved.addEventListener( 'click', () => {
     const refinanciamientoCheckboxes = document.querySelectorAll( '.refinanciamiento-checkbox' );
@@ -81,10 +80,10 @@
         });
       }
     });
-    if ( data.length > 0 ) {
-      const modal = document.getElementById( 'modal-confirm' );
-      modal.style.display = 'block';
-    };
+    if ( data.length <= 0 )
+      btnConfirm.disabled = true;
+    else
+      btnConfirm.disabled = false;
   });
 
   btnDisapproved.addEventListener( 'click', () => {
@@ -97,14 +96,15 @@
         });
       }
     });
-    if ( data.length > 0 ) {
-      const modal = document.getElementById( 'modal-confirm' );
-      modal.style.display = 'block';
-    };
+    if ( data.length <= 0 )
+      btnConfirm.disabled = true;
+    else
+      btnConfirm.disabled = false;
   });
 
-  const btnConfirm = document.getElementById( 'btn-confirm' );
+
   btnConfirm.addEventListener( 'click', () => {
+    console.log( data );
     const url = 'update_refinanciamiento.php';
     const params = {
       method: 'POST',
@@ -113,12 +113,18 @@
       },
       body: JSON.stringify( data )
     };
-    fetch( url, params )
-      .then( response => response.json() )
-      .then( data => {
-        if ( data.status === 'success' ) {
-          location.reload();
-        }
-      });
+    try {
+      fetch( url, params )
+        .then( response => response.json() )
+        .then( data => {
+          if ( data.status === 'success' ) {
+            location.reload();
+          }
+        });
+    } catch ( err ) {
+      console.log( err );
+    } finally {
+      data = [];
+    }
   });
 </script>
