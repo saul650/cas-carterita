@@ -82,7 +82,8 @@
       }
     });
     if ( data.length > 0 ) {
-      $( '#modal-confirm' ).modal( 'show' );
+      const modal = document.getElementById( 'modal-confirm' );
+      modal.style.display = 'block';
     };
   });
 
@@ -97,7 +98,8 @@
       }
     });
     if ( data.length > 0 ) {
-      $( '#modal-confirm' ).modal( 'show' );
+      const modal = document.getElementById( 'modal-confirm' );
+      modal.style.display = 'block';
     };
   });
 
