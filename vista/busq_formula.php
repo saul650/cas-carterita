@@ -41,35 +41,82 @@
         <?php } ?>
       </tbody>
     </table>
-    <button id="save-changes" class="btn btn-primary">Guardar cambios</button>
+    <button id="btn-approved" class="btn btn-primary">Aprobar</button>
+    <button id="btn-disapproved" class="btn btn-danger">Desaprobar</button>
+</div>
+<!-- modal with button confirm -->
+<div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-confirm-label">Confirmar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Está seguro de realizar esta acción?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  const saveChangesButton = document.getElementById('save-changes');
+  const btnApproved    = document.getElementById( 'btn-approved' );
+  const btnDisapproved = document.getElementById( 'btn-disapproved' );
 
-  saveChangesButton.addEventListener( 'click', () => {
-    const refinanciamientoCheckboxes = document.querySelectorAll('.refinanciamiento-checkbox');
-    const data = [];
+  const data = [];
 
+  btnApproved.addEventListener( 'click', () => {
+    const refinanciamientoCheckboxes = document.querySelectorAll( '.refinanciamiento-checkbox' );
     refinanciamientoCheckboxes.forEach( checkbox => {
       if ( checkbox.checked ) {
         data.push({
-          id: checkbox.parentElement.querySelector('input[name="id"]').value,
-          refinanciamiento: checkbox.checked ? 1 : 0
+          id: checkbox.parentElement.querySelector( 'input[ name = "id" ]' ).value,
+          refinanciamiento: 1
         });
       }
-    } );
+    });
+    if ( data.length > 0 ) {
+      $( '#modal-confirm' ).modal( 'show' );
+    };
+  });
 
-    fetch( 'actions/editar_refinanciamiento.php', {
+  btnDisapproved.addEventListener( 'click', () => {
+    const refinanciamientoCheckboxes = document.querySelectorAll( '.refinanciamiento-checkbox' );
+    refinanciamientoCheckboxes.forEach( checkbox => {
+      if ( checkbox.checked ) {
+        data.push({
+          id: checkbox.parentElement.querySelector( 'input[ name = "id" ]' ).value,
+          refinanciamiento: 0
+        });
+      }
+    });
+    if ( data.length > 0 ) {
+      $( '#modal-confirm' ).modal( 'show' );
+    };
+  });
+
+  const btnConfirm = document.getElementById( 'btn-confirm' );
+  btnConfirm.addEventListener( 'click', () => {
+    const url = 'update_refinanciamiento.php';
+    const params = {
       method: 'POST',
-      body: JSON.stringify( data ),
       headers: {
         'Content-Type': 'application/json'
-      }
-    } );
-    console.log( data );
-    // now show echo of the php file editar_refinanciamiento.php
-
-
-  } );
+      },
+      body: JSON.stringify( data )
+    };
+    fetch( url, params )
+      .then( response => response.json() )
+      .then( data => {
+        if ( data.status === 'success' ) {
+          location.reload();
+        }
+      });
+  });
 </script>
